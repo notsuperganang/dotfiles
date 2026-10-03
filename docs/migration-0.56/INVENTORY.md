@@ -17,7 +17,7 @@ names the source of its new syntax:
 | Root FS | ext4, `/dev/nvme0n1p2` |
 | ESP | `/boot/efi` = `/dev/nvme1n1p1`, **shared with Windows Boot Manager**. Entries: `EFI/GRUB/grubx64.efi` (Boot0001, BootCurrent), `EFI/Microsoft` |
 | Bootloader | GRUB 2.14 → 2.16; `GRUB_DEFAULT=0` (currently lts), `GRUB_TIMEOUT=30`, os-prober enabled |
-| Timeshift | rsync mode, target = root disk (nvme0n1p2), no schedule, no snapshots yet; home dirs excluded (V8) |
+| Timeshift | rsync mode, target = root disk (nvme0n1p2), no schedule; home dirs excluded (V8). Dry-run snapshot `2026-10-03_22-08-23`: 554 s, ~39 GB (`/` 229 → 268 GB used, 162 GB free) |
 | `/etc/pacman.conf` | `IgnorePkg = hyprland` (line 25) |
 | logind | `HandleLidSwitch*` all at defaults (suspend; docked = ignore) |
 

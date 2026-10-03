@@ -34,8 +34,8 @@ move the pin (and re-check INVENTORY). If you move it, re-run the config check:
 `$ ~/dev/hypr-lua/docs/migration-0.56/harness/check.sh <new-sha>` (the worktree still exists at §0).
 
 ```sh
-$ df -h / /boot/efi          # need ≥ ~70 GB free on /: ~5 GB packages + first Timeshift snapshot
-                              # (system only, ≈ 60 GB; home is excluded, V8). 201 GB free on 2026-10-03
+$ df -h / /boot/efi          # need ≥ ~20 GB free on /: ~5 GB packages + an incremental snapshot.
+                              # 162 GB free after the dry-run snapshot on 2026-10-03
 $ systemctl --failed          # note the baseline so new failures stand out later
 ```
 
@@ -66,6 +66,14 @@ $ cp /etc/pacman.conf ~/migration-backup/pacman.conf.pre
 # timeshift --create --comments "pre-lua-migration (hyprland 0.54.3)" --tags O
 ```
 ✅ `sudo timeshift --list` shows the snapshot.
+
+Reference: the dry-run snapshot `2026-10-03_22-08-23` (system only, ~135k+ files) took **554 s**
+and used **~39 GB**. Day H's snapshot is incremental (rsync hardlinks against it), so expect
+minutes and a few GB. Keep the dry-run snapshot until the migration is stable; it is a second,
+older restore point. Run the snapshot with sleep/idle blocked: either
+`sudo systemd-inhibit --what=idle:sleep --why="timeshift snapshot" timeshift --create …` or the
+Quickshell keep-awake toggle, because hypridle suspends after 15 min idle. Closing the lid is fine
+only while the external monitor stays connected (logind `HandleLidSwitchDocked=ignore`).
 
 ## 2. Switch to a TTY
 
