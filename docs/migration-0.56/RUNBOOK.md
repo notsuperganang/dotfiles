@@ -30,7 +30,8 @@ $ git -C ~/.cache/dots-hyprland fetch
 $ git -C ~/.cache/dots-hyprland log --oneline 547836f1..origin/main
 ```
 ✅ Review any commits after the pinned target. Either stay on `547836f1` or deliberately
-move the pin (and re-check INVENTORY).
+move the pin (and re-check INVENTORY). If you move it, re-run the config check:
+`$ ~/dev/hypr-lua/docs/migration-0.56/harness/check.sh <new-sha>` (the worktree still exists at §0).
 
 ```sh
 $ df -h / /boot/efi          # free space on / must cover: ~5 GB packages + a full first Timeshift
@@ -186,8 +187,10 @@ $ cd ~/.config/quickshell
 $ mv ii ii.setup                            # what setup installed (upstream @ pin)
 $ git clone -b rebase/upstream ~/dev/shell-qml ii   # local clone: no network/SSH needed in a TTY
 $ git -C ii remote set-url origin git@github.com:notsuperganang/shell-qml.git
-$ diff -rq ii.setup ii | grep -v '\.git'    # ✅ only our 3 re-applied changes (+ .claude)
+$ diff -rq ii.setup ii | grep -v '\.git'    # ✅ only RegionSelection/RegionSelector/ScreenshotAction/Dock differ
 $ rm -rf ii.setup
+# .claude/ was untracked in the old fork, so restore it from the tarball (§1)
+$ tar --zstd -xf ~/migration-backup/config-pre-lua-*.tar.zst -C ~ .config/quickshell/ii/.claude
 ```
 
 ### 6.3 Other configs
@@ -212,12 +215,13 @@ $ Hyprland --verify-config
 ✅ No errors. If there are errors, fix them now (they point at the file/line).
 
 Reboot into **linux-lts** (default), log in, and go through the PRD §7 acceptance list plus the
-INVENTORY §3 parity table, row by row. Resolve the open items as you go:
-- V2: `hyprctl dispatch 'hl.dsp.dpms({ action = "disable" })'` vs `'hl.dsp.dpms(false)'`
-  (test from a terminal; the screen turns back on with any input or the opposite command)
-- V3: `hyprctl -j activeworkspace | jq '.id, .monitor'` and
-  `hyprctl -j workspaces | jq '.[0] | {id, monitor, windows}'`
-- V1/V5/V6/V7: exercise the binds and gestures
+INVENTORY §3 parity table, row by row. V1–V7 were resolved from source in Phase 1; confirm them
+live:
+- `hyprctl dispatch 'hl.dsp.dpms({ action = "disable" })'` turns the screens off (any input or
+  `{ action = "enable" }` turns them back on)
+- `hyprctl -j activeworkspace | jq '.id, .monitor'` prints sensible values (used by the ws scripts)
+- the error banner is empty (no shadowed or unset-missing gestures, no unknown fields)
+- every bind and gesture in INVENTORY §3.1/§3.2, including lid close/open with the external monitor connected
 
 Then spot-check the mainline kernel: reboot, pick `linux` in GRUB, confirm the session and the
 external monitor work, and reboot back to lts.
