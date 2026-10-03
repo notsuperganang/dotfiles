@@ -1,0 +1,3 @@
+-- You can put custom rules here
+-- Window/layer rules: https://wiki.hypr.land/0.56.0/Configuring/Basics/Window-Rules/
+-- Workspace rules: https://wiki.hypr.land/0.56.0/Configuring/Basics/Workspace-Rules/
