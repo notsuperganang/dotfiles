@@ -73,8 +73,8 @@ minutes and a few GB. Keep the dry-run snapshot until the migration is stable; i
 older restore point. Run the snapshot with sleep/idle blocked, because hypridle locks after 5 min
 and suspends after 15 min idle: `sudo systemd-inhibit --what=idle:sleep --why="timeshift snapshot" timeshift --create …`,
 or keep a terminal open with `systemd-inhibit --what=idle:sleep --why="day H" sleep infinity` (works without
-sudo; Ctrl+C to release). **Don't rely on the Quickshell keep-awake (coffee) toggle**: it does not work
-on this setup (PRD Phase 3). Closing the lid is fine
+sudo; Ctrl+C to release). **Don't rely on the Quickshell keep-awake (coffee) toggle**: it silently stops
+working after suspend/resume or monitor changes until Quickshell restarts (PRD Phase 3). Closing the lid is fine
 only while the external monitor stays connected (logind `HandleLidSwitchDocked=ignore`).
 
 ## 2. Switch to a TTY

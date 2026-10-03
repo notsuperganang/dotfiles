@@ -115,12 +115,16 @@ Follow [RUNBOOK.md](RUNBOOK.md).
 - `paccache -r` once things have been stable for about a week.
 - Clean up stale dirs: `~/.config/quickshell.backup`, `illogical-impulse.backup`,
   `swaync-backup`.
-- Quickshell keep-awake (coffee) toggle doesn't inhibit idle (found 2026-10-03 on 0.54.3).
-  `services/Idle.qml` attaches the Wayland idle inhibitor to a 0×0 `PanelWindow` that never shows up
-  in `hyprctl layers`, so Hyprland has no mapped surface to honour, and hypridle still locks after
-  5 min. The file is identical in upstream `547836f1`. Re-test on 0.56; if it's still broken, give
-  the window a 1×1 size in the fork, check that it appears in `hyprctl layers`, and consider
-  reporting it upstream.
+- Quickshell keep-awake (coffee) toggle **stops working mid-session** (found 2026-10-03 on 0.54.3).
+  `services/Idle.qml` attaches the Wayland idle inhibitor to a 0×0 `PanelWindow`. Right after
+  Quickshell starts, it shows up in `hyprctl layers` as `quickshell 1x1` and inhibits correctly
+  (verified with a 4 s test hypridle). After a suspend/resume and/or monitor changes (lid closing
+  disables eDP-2), the surface had disappeared and Quickshell didn't recreate it, so hypridle locked
+  despite `inhibit: true`. Workaround: `qs kill -c ii; qs -c ii -d`. The file is identical in upstream
+  `547836f1`. Re-test on 0.56 (suspend and lid cycles); if it still happens, pin the window to a screen
+  / recreate it on screen changes in the fork, and consider reporting it upstream. Test method:
+  no video playing (browsers inhibit idle, see `hyprctl clients -j` → `inhibitingIdle`), coffee on, run a
+  second `hypridle -c <conf with timeout = 4>` for ~12 s, and see if it fires.
 
 ## 7. Acceptance criteria
 
