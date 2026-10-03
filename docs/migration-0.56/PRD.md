@@ -99,6 +99,11 @@ affected `~/.config` dirs in `~/migration-backup/`. No external/cloud backup. | 
     here until RUNBOOK §7, **no commits on `main`**. Day-H notes (including the RUNBOOK
     outcome log) go on the branch, so the final `merge --ff-only` works.
 
+**Status (2026-10-03):** P1.1–P1.8 done on `migrate/lua-0.56` (hypr) and `rebase/upstream`
+(`~/dev/shell-qml`). The config check (`harness/check.sh`) passes with 0 errors. V1–V7 were
+resolved from the v0.56.2 source (INVENTORY §7). Remaining: P1.9 just before day H, and P1.10
+(push both branches).
+
 ### Phase 2: day H
 
 Follow [RUNBOOK.md](RUNBOOK.md).
