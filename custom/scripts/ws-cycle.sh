@@ -45,4 +45,4 @@ else
   next_id="$prev"
 fi
 
-hyprctl dispatch workspace "$next_id"
+hyprctl dispatch "hl.dsp.focus({ workspace = \"$next_id\" })"

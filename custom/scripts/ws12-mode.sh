@@ -35,19 +35,19 @@ ws_next() {
   if [ -f "$LOCK_FILE" ]; then
     curr="$(hyprctl -j activeworkspace | jq -r '.id')"
     if [ "$curr" = "1" ]; then
-      hyprctl dispatch workspace 2
+      hyprctl dispatch 'hl.dsp.focus({ workspace = "2" })'
     elif [ "$curr" = "2" ]; then
-      hyprctl dispatch workspace 1
+      hyprctl dispatch 'hl.dsp.focus({ workspace = "1" })'
     else
       # di luar 1/2? lompat ke 1 dulu
-      hyprctl dispatch workspace 1
+      hyprctl dispatch 'hl.dsp.focus({ workspace = "1" })'
     fi
   else
     # Mode OFF → perilaku normal. Panggil ws-cycle.sh jika ada, kalau tidak: r+1.
     if [ -x "${HOME}/.config/hypr/custom/scripts/ws-cycle.sh" ]; then
       "${HOME}/.config/hypr/custom/scripts/ws-cycle.sh" next
     else
-      hyprctl dispatch workspace r+1
+      hyprctl dispatch 'hl.dsp.focus({ workspace = "r+1" })'
     fi
   fi
 }
