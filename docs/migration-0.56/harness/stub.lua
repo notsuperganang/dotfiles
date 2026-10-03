@@ -44,7 +44,7 @@ function hl.bind(keys, d, opts)
     if type(keys) ~= "string" then return err("hl.bind: keys must be a string") end
     if type(d) ~= "function" and not (type(d) == "table" and d.__dsp) then return err("hl.bind(" .. keys .. "): dispatcher must be hl.dsp.* or a function") end
     if opts ~= nil and type(opts) ~= "table" then return err("hl.bind(" .. keys .. "): flags must be a table") end
-    binds[#binds + 1] = { keys = keys, d = d, opts = opts or {} }
+    binds[#binds + 1] = { keys = keys, d = d, opts = opts or {}, src = debug.getinfo(2, "S").short_src }
 end
 function hl.unbind(keys)
     if type(keys) ~= "string" then return err("hl.unbind: bad argument") end

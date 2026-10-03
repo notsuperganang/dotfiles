@@ -28,6 +28,30 @@ for _, k in ipairs({ "CTRL + SUPER + Slash", "CTRL + SUPER + ALT + Slash", "SUPE
     "SUPER + grave", "SUPER + SUPER_L", "SUPER + SUPER_R", "SUPER_L", "SUPER + D", "SUPER + CTRL + F", "SUPER + A", "SUPER + SHIFT + S",
     "switch:on:Lid Switch", "switch:off:Lid Switch" }) do show(k) end
 
+-- Hyprland matches binds by modmask + key, so modifier order doesn't matter at runtime even
+-- though hl.unbind() compares the literal string. Flag any custom bind that shares its
+-- canonical combo with a bind from another file: both would fire.
+local function canon(keys)
+    local parts = {}
+    for p in keys:gmatch("[^+]+") do parts[#parts + 1] = p:gsub("^%s+", ""):gsub("%s+$", "") end
+    local key = table.remove(parts):lower()
+    for i, m in ipairs(parts) do parts[i] = m:upper():gsub("^CONTROL$", "CTRL") end
+    table.sort(parts)
+    return table.concat(parts, "+") .. "|" .. key
+end
+local collisions = 0
+for _, ours in ipairs(s.binds) do
+    if ours.src:find("/custom/") then
+        for _, other in ipairs(s.binds) do
+            if not other.src:find("/custom/") and canon(other.keys) == canon(ours.keys) then
+                collisions = collisions + 1
+                print(("  ! collision: %q (%s) also bound by %q in %s"):format(ours.keys, ours.src:match("[^/]+$"), other.keys, other.src:match("[^/]+$")))
+            end
+        end
+    end
+end
+print(("\nbind collisions with upstream: %d"):format(collisions))
+
 print("\nmonitors:")
 for o, r in pairs(s.monitors) do
     local parts = {}
@@ -39,4 +63,4 @@ print("\nworkspace rules:")
 for _, w in ipairs(s.wsrules) do print(("  ws %s -> %s%s"):format(w.workspace, tostring(w.monitor), w.default and " (default)" or "")) end
 print("\nenv QT_SCALE_FACTOR=" .. tostring(s.envs.QT_SCALE_FACTOR) .. "  qsConfig=" .. tostring(s.envs.qsConfig))
 
-if not ok or #s.errors > 0 then os.exit(1) end
+if not ok or #s.errors > 0 or collisions > 0 then os.exit(1) end
