@@ -17,7 +17,7 @@ names the source of its new syntax:
 | Root FS | ext4, `/dev/nvme0n1p2` |
 | ESP | `/boot/efi` = `/dev/nvme1n1p1`, **shared with Windows Boot Manager**. Entries: `EFI/GRUB/grubx64.efi` (Boot0001, BootCurrent), `EFI/Microsoft` |
 | Bootloader | GRUB 2.14 → 2.16; `GRUB_DEFAULT=0` (currently lts), `GRUB_TIMEOUT=30`, os-prober enabled |
-| Timeshift | rsync mode, target = root disk (nvme0n1p2), no schedule |
+| Timeshift | rsync mode, target = root disk (nvme0n1p2), no schedule, no snapshots yet; home dirs excluded (V8) |
 | `/etc/pacman.conf` | `IgnorePkg = hyprland` (line 25) |
 | logind | `HandleLidSwitch*` all at defaults (suspend; docked = ignore) |
 
@@ -195,7 +195,7 @@ tag `v0.56.2`) and the 0.56.0 wiki. Paths below are relative to that source tree
 | V5 | Can lambda gestures be unset? | **Yes.** `CTrackpadGestures::removeGesture` (`src/managers/input/trackpad/TrackpadGestures.cpp`) matches fingers, direction, mods, scale and disableInhibit, **not the action** |
 | V6 | Function binds on `switch:` with `locked` | Supported (0.56.0 Binds page: function dispatchers, switches, `locked` flag). `hl.monitor()` called at runtime replaces the rule with the same `output` (`CMonitorRuleManager::add` erases by name) and schedules a monitor refresh, so it applies immediately |
 | V7 | `cycle_next({ next = false })` | `next` is a bool field read by the `cycle_next` dispatcher builder; `false` cycles backwards |
-| V8 | Does Timeshift include `/home`? | **Open.** No snapshots exist yet and reading them needs sudo. Check in the Timeshift GUI on day H (RUNBOOK §0) |
+| V8 | Does Timeshift include `/home`? | **No.** Checked in the Timeshift GUI on 2026-10-03: Users tab = *Exclude All Files* for `root` and `notsuperganang`; Filters = `- /root/**`, `- /home/notsuperganang/**`. (`/etc/timeshift/timeshift.json` shows `exclude: []` because these are Timeshift's built-in defaults.) A snapshot is system-only, ≈ 60 GB (229 GB used on `/` minus ~168 GB home); 201 GB free. A restore does **not** roll back `~/.config`, so config rollback relies on the git tags and the tarball |
 
 ### Constraints learned from the source
 

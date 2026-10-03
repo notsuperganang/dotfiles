@@ -34,14 +34,14 @@ move the pin (and re-check INVENTORY). If you move it, re-run the config check:
 `$ ~/dev/hypr-lua/docs/migration-0.56/harness/check.sh <new-sha>` (the worktree still exists at §0).
 
 ```sh
-$ df -h / /boot/efi          # free space on / must cover: ~5 GB packages + a full first Timeshift
-                              # snapshot (≈ used size of / , more if /home is included, see V8)
+$ df -h / /boot/efi          # need ≥ ~70 GB free on /: ~5 GB packages + first Timeshift snapshot
+                              # (system only, ≈ 60 GB; home is excluded, V8). 201 GB free on 2026-10-03
 $ systemctl --failed          # note the baseline so new failures stand out later
 ```
 
-Check Timeshift's home handling (INVENTORY V8): open Timeshift → Settings → Users and note
-whether `/home/notsuperganang` is included. Either way, the config rollback is git + the
-local tarball below.
+Timeshift excludes `/root` and `/home/notsuperganang` (INVENTORY V8, checked 2026-10-03). If
+anyone changed Settings → Users since, set both back to *Exclude All Files*, because a home-inclusive
+first snapshot would not fit on `/`. Config rollback is git + the local tarball below.
 
 ## 1. Freeze the current state
 
