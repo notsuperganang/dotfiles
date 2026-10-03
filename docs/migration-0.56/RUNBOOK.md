@@ -70,9 +70,11 @@ $ cp /etc/pacman.conf ~/migration-backup/pacman.conf.pre
 Reference: the dry-run snapshot `2026-10-03_22-08-23` (system only, ~135k+ files) took **554 s**
 and used **~39 GB**. Day H's snapshot is incremental (rsync hardlinks against it), so expect
 minutes and a few GB. Keep the dry-run snapshot until the migration is stable; it is a second,
-older restore point. Run the snapshot with sleep/idle blocked: either
-`sudo systemd-inhibit --what=idle:sleep --why="timeshift snapshot" timeshift --create …` or the
-Quickshell keep-awake toggle, because hypridle suspends after 15 min idle. Closing the lid is fine
+older restore point. Run the snapshot with sleep/idle blocked, because hypridle locks after 5 min
+and suspends after 15 min idle: `sudo systemd-inhibit --what=idle:sleep --why="timeshift snapshot" timeshift --create …`,
+or keep a terminal open with `systemd-inhibit --what=idle:sleep --why="day H" sleep infinity` (works without
+sudo; Ctrl+C to release). **Don't rely on the Quickshell keep-awake (coffee) toggle**: it does not work
+on this setup (PRD Phase 3). Closing the lid is fine
 only while the external monitor stays connected (logind `HandleLidSwitchDocked=ignore`).
 
 ## 2. Switch to a TTY

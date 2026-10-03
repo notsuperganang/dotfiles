@@ -115,6 +115,12 @@ Follow [RUNBOOK.md](RUNBOOK.md).
 - `paccache -r` once things have been stable for about a week.
 - Clean up stale dirs: `~/.config/quickshell.backup`, `illogical-impulse.backup`,
   `swaync-backup`.
+- Quickshell keep-awake (coffee) toggle doesn't inhibit idle (found 2026-10-03 on 0.54.3).
+  `services/Idle.qml` attaches the Wayland idle inhibitor to a 0×0 `PanelWindow` that never shows up
+  in `hyprctl layers`, so Hyprland has no mapped surface to honour, and hypridle still locks after
+  5 min. The file is identical in upstream `547836f1`. Re-test on 0.56; if it's still broken, give
+  the window a 1×1 size in the fork, check that it appears in `hyprctl layers`, and consider
+  reporting it upstream.
 
 ## 7. Acceptance criteria
 
