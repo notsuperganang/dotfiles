@@ -19,18 +19,19 @@
 
 ```
 ~/.config/hypr/
-├── hyprland.conf        # entry point, sources everything
-├── hyprland/            # base config — don't touch
+├── hyprland.lua         # entry point (Hyprland 0.55+ Lua config), requires everything
+├── hyprland/            # base config from end-4/dots-hyprland — don't touch
 ├── custom/              # your playground ← edit here or stay basic
-│   ├── keybinds.conf
-│   ├── general.conf
-│   ├── env.conf
-│   ├── rules.conf
+│   ├── keybinds.lua
+│   ├── general.lua
+│   ├── env.lua
+│   ├── rules.lua
 │   └── scripts/
-├── monitors.conf        # monitor layout (nwg-displays)
-├── workspaces.conf      # workspace → monitor mapping
-├── hyprlock.conf
-└── hypridle.conf
+├── monitors.lua         # monitor layout (hand-written, toggle by comment)
+├── workspaces.lua       # workspace → monitor mapping
+├── hyprlock.conf        # hyprlock/hypridle still use hyprlang
+├── hypridle.conf
+└── docs/migration-0.56/ # Lua migration plan, runbook and config check
 ```
 
 ## key bindings (custom)
@@ -43,9 +44,10 @@
 | `Alt + Shift + Tab` | prev window |
 | `Super + Ctrl + F` | maximize |
 | `Super + D` | overview |
-| `Super + Shift + S` | region screenshot |
+| `Super + Shift + S` | region screenshot (clipboard + `~/Pictures/Screenshots`) |
+| `Super + A` | toggle dock |
 | `Super + grave` | toggle cook mode 🍳 |
 
 ## customizing
 
-Put your stuff in `custom/` — it loads after the base config and wins. editing `hyprland/` directly means you've given up on having a clean git history. your choice.
+Put your stuff in `custom/` — it loads after the base config and wins. To override an upstream bind, `hl.unbind()` it first with the exact key string upstream uses. Run `docs/migration-0.56/harness/check.sh` after edits. editing `hyprland/` directly means you've given up on having a clean git history. your choice.
