@@ -1,0 +1,1 @@
+-- Override variables from hyprland/variables.lua here (terminal, browser, qsConfig, ...).

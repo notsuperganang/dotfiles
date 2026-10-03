@@ -1,0 +1,2 @@
+-- Custom startup commands. Wrap one-shot commands in hl.on("hyprland.start", ...),
+-- which fires once per session (not on reload); see hyprland/execs.lua.
