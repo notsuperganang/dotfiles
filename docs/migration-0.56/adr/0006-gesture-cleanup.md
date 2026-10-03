@@ -15,7 +15,9 @@ Final gesture set:
   horizontal/up/down) → **off**
 
 ## Consequences
-- `action = "unset"` must match the original gesture exactly. Upstream's 4-finger up/down use
-  Lua lambdas, so they may not be unsettable (INVENTORY V5). The fallback is to redefine them as
-  no-ops, or as a last resort patch `hyprland/general.lua` and accept re-patching after each
-  dots update.
+- In Hyprland 0.56, a gesture shadowed by an earlier one with the same fingers and mods is rejected,
+  so the five `unset`s must come **before** our three adds (`custom/general.lua`).
+- `unset` matches on fingers, direction, mods and scale but not on the action, so upstream's
+  lambda-based 4-finger gestures can be removed too (verified in the v0.56.2 source, INVENTORY V5).
+- An `unset` that matches nothing is an error. If upstream drops one of these defaults, remove the
+  matching `unset` (`harness/check.sh` flags it).
