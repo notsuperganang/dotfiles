@@ -254,7 +254,7 @@ $ git switch --detach pre-lua-migration         # hyprland.conf, hyprland/*.conf
 $ ls hyprland.lua 2>/dev/null && mv hyprland.lua hyprland.lua.disabled   # must not exist, or Lua wins
 $ cd ~/.config/quickshell && rm -rf ii && \
   git clone ~/dev/shell-qml ii && \
-  git -C ii checkout pre-lua-migration   # the tag must exist in ~/dev/shell-qml (fetch --tags)
+  git -C ii checkout pre-lua-migration   # tag already exists locally in ~/dev/shell-qml (@ 461bf57)
 ```
 Then re-login (or `hyprctl reload full-reset` from a running session). Hyprland 0.56 loads
 `hyprland.conf` when no `hyprland.lua` exists.

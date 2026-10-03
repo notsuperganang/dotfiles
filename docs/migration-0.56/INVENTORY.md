@@ -76,7 +76,7 @@ Base file drift: the only local edit in `hyprland/` was `env.conf` setting
 | K11 | `bind = Super+Ctrl, F, fullscreen, 1` | Maximize | `hl.bind("SUPER + CTRL + F", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }))` | W56/UP |
 | K12 | `unbind = Super, D` + `bind = Super, D, global, quickshell:overviewWorkspacesToggle` | Overview (upstream uses SUPER+D for maximize) | `hl.unbind("SUPER + D")` + `hl.bind("SUPER + D", hl.dsp.global("quickshell:overviewWorkspacesToggle"))` | UP |
 | K13 | `bindl = , switch:on:Lid Switch, exec, hyprctl keyword monitor "eDP-2, disable"` | Lid closed → turn off laptop panel | `hl.bind("switch:on:Lid Switch", <fn: hl.monitor({ output = "eDP-2", disabled = true })>, { locked = true })`. `hyprctl keyword` is hyprlang-only. 0.55.1 fixed re-enabling monitors from Lua | W56 + src (V6) |
-| K14 | `bindl = , switch:off:Lid Switch, exec, hyprctl reload` | Lid open → reload (restores the monitors.lua position) | `hl.bind("switch:off:Lid Switch", hl.dsp.exec_cmd("hyprctl reload"), { locked = true })` (or the `reload_config()` dispatcher) | W56 |
+| K14 | `bindl = , switch:off:Lid Switch, exec, hyprctl reload` | Lid open → reload (restores the monitors.lua position) | `hl.bind("switch:off:Lid Switch", hl.dsp.exec_cmd("hyprctl reload"), { locked = true })`. Reload is a full Lua re-evaluation, but startup commands live in `hl.on("hyprland.start")`, which fires once per session (`static bool once` in `src/render/Renderer.cpp`), so Quickshell etc. are not respawned | W56 + src |
 
 Cheatsheet: the old `#!` / `##!` comment markers and trailing `# description` don't exist
 in Lua. Use `{ description = "…" }` on each bind (UP).
