@@ -5,7 +5,7 @@ names the source of its new syntax:
 
 - **W56**: Hyprland wiki 0.56.0 (`wiki.hypr.land/0.56.0/...`)
 - **UP**: upstream dots-hyprland `547836f1`
-- **TBD**: confirm during Phase 1 / day H (also listed in §7)
+- **src**: confirmed in the Hyprland v0.56.2 source (§7)
 
 ## 1. Machine
 
@@ -68,14 +68,14 @@ Base file drift: the only local edit in `hyprland/` was `env.conf` setting
 | K3 | `unbind = Super, Tab` + `bind = Super, Tab, exec, ws12-mode.sh next` | Next WS (cook-mode aware) | `hl.unbind("SUPER + Tab")` + `hl.bind("SUPER + Tab", hl.dsp.exec_cmd("~/.config/hypr/custom/scripts/ws12-mode.sh next"))`. Upstream binds SUPER+Tab to the overview | W56/UP |
 | K4 | `bind = Super+Shift, Tab, exec, ws-cycle.sh prev` | Prev WS | `hl.bind("SUPER + SHIFT + Tab", hl.dsp.exec_cmd("…/ws-cycle.sh prev"))` | W56 |
 | K5 | `bind = Alt, Tab, cyclenext` | Next window | `hl.bind("ALT + Tab", hl.dsp.window.cycle_next())` | W56 |
-| K6 | `bind = Alt+Shift, Tab, cyclenext, prev` | Prev window | `hl.bind("ALT + SHIFT + Tab", hl.dsp.window.cycle_next({ next = false }))` | W56 (TBD: `next=false` semantics) |
+| K6 | `bind = Alt+Shift, Tab, cyclenext, prev` | Prev window | `hl.bind("ALT + SHIFT + Tab", hl.dsp.window.cycle_next({ next = false }))` | W56 + src (V7) |
 | K7 | `unbind = Super, grave` + `bind = Super, grave, exec, ws12-mode.sh toggle` | Toggle cook mode (WS 1↔2 lock) | `hl.unbind("SUPER + grave")` + `hl.bind(…, exec_cmd("…/ws12-mode.sh toggle"))` | W56 |
-| K8 | `unbind = Super, Super_L` / `Super_R` | Disable tap-Super search toggle | `hl.unbind("SUPER + SUPER_L")` and `hl.unbind("SUPER + SUPER_R")`. Upstream has **two** binds per key (global + fuzzel fallback), so check that both go. Keep the `SUPER_L` workspaceNumber binds | UP (TBD) |
-| K9 | `unbind = Super+Shift, S` + `bind = …, global, quickshell:regionScreenshotSave` (clipboard-only variant commented) | Region screenshot → clipboard + `~/Pictures/Screenshots` | `hl.unbind("SUPER + SHIFT + S")` + `hl.bind("SUPER + SHIFT + S", hl.dsp.global("quickshell:regionScreenshotSave"))`. Keep the commented clipboard-only alternative. Upstream binds SUPER+SHIFT+S **twice** (lines 68–69), so check that the unbind removes both | UP (TBD) |
+| K8 | `unbind = Super, Super_L` / `Super_R` | Disable tap-Super search toggle | `hl.unbind("SUPER + SUPER_L")` and `hl.unbind("SUPER + SUPER_R")`. Upstream has **two** binds per key (global + fuzzel fallback), so check that both go. Keep the `SUPER_L` workspaceNumber binds | UP + src (V1) |
+| K9 | `unbind = Super+Shift, S` + `bind = …, global, quickshell:regionScreenshotSave` (clipboard-only variant commented) | Region screenshot → clipboard + `~/Pictures/Screenshots` | `hl.unbind("SUPER + SHIFT + S")` + `hl.bind("SUPER + SHIFT + S", hl.dsp.global("quickshell:regionScreenshotSave"))`. Keep the commented clipboard-only alternative. Upstream binds SUPER+SHIFT+S **twice** (lines 68–69), so check that the unbind removes both | UP + src (V1) |
 | K10 | `unbind = Super, A` + `bind = Super, A, exec, qs -c $qsConfig ipc call dock toggle` | Toggle dock (replaces left sidebar) | `hl.unbind("SUPER + A")` + `hl.bind("SUPER + A", hl.dsp.exec_cmd("qs -c $qsConfig ipc call dock toggle"))`. `qsConfig` is now set via `hl.env` | UP |
 | K11 | `bind = Super+Ctrl, F, fullscreen, 1` | Maximize | `hl.bind("SUPER + CTRL + F", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }))` | W56/UP |
 | K12 | `unbind = Super, D` + `bind = Super, D, global, quickshell:overviewWorkspacesToggle` | Overview (upstream uses SUPER+D for maximize) | `hl.unbind("SUPER + D")` + `hl.bind("SUPER + D", hl.dsp.global("quickshell:overviewWorkspacesToggle"))` | UP |
-| K13 | `bindl = , switch:on:Lid Switch, exec, hyprctl keyword monitor "eDP-2, disable"` | Lid closed → turn off laptop panel | `hl.bind("switch:on:Lid Switch", <fn: hl.monitor({ output = "eDP-2", disabled = true })>, { locked = true })`. `hyprctl keyword` is hyprlang-only. 0.55.1 fixed re-enabling monitors from Lua | W56 (TBD: function binds) |
+| K13 | `bindl = , switch:on:Lid Switch, exec, hyprctl keyword monitor "eDP-2, disable"` | Lid closed → turn off laptop panel | `hl.bind("switch:on:Lid Switch", <fn: hl.monitor({ output = "eDP-2", disabled = true })>, { locked = true })`. `hyprctl keyword` is hyprlang-only. 0.55.1 fixed re-enabling monitors from Lua | W56 + src (V6) |
 | K14 | `bindl = , switch:off:Lid Switch, exec, hyprctl reload` | Lid open → reload (restores the monitors.lua position) | `hl.bind("switch:off:Lid Switch", hl.dsp.exec_cmd("hyprctl reload"), { locked = true })` (or the `reload_config()` dispatcher) | W56 |
 
 Cheatsheet: the old `#!` / `##!` comment markers and trailing `# description` don't exist
@@ -93,15 +93,15 @@ Agreed target behaviour (ADR-0006):
 | G4 | 3-finger swipe → move (base) | `unset` attempted | **off** | `hl.gesture({ fingers = 3, direction = "swipe", action = "unset" })`. Must match the base exactly |
 | G5 | 3-finger pinch (base: float, UP now: fullscreen) | active | **off** | `unset` matching UP `{ fingers = 3, direction = "pinch" }` |
 | G6 | 4-finger horizontal → workspace (base) | `unset` | **off** | `unset` matching UP |
-| G7 | 4-finger up/down → overview (base) | `unset` | **off** | UP defines these with **Lua lambdas**, so an exact-match `unset` may be impossible. See V5 |
+| G7 | 4-finger up/down → overview (base) | `unset` | **off** | `unset` with `{ fingers = 4, direction = "up"/"down" }`. UP uses Lua lambdas, but unset ignores the action (V5) |
 
 Other settings to carry over:
 
 | # | Old | New (Lua) | Src |
 |---|---|---|---|
-| S1 | `misc { on_focus_under_fullscreen = 1 }` | `hl.config({ misc = { on_focus_under_fullscreen = 1 } })` | W56 (TBD: value type) |
+| S1 | `misc { on_focus_under_fullscreen = 1 }` | `hl.config({ misc = { on_focus_under_fullscreen = 1 } })` | W56 (V4) |
 | S2 | `input.touchpad.clickfinger_behavior = false` | `hl.config({ input = { touchpad = { clickfinger_behavior = false, … } } })` | W56 |
-| S3 | `input.touchpad.tap-to-click = true` | same block (key may be `tap_to_click` in Lua) | TBD |
+| S3 | `input.touchpad.tap-to-click = true` | same block, key `tap_to_click` | W56 (V4) |
 | S4 | `input.touchpad.tap_button_map = lrm` | same block | W56 |
 | S5 | `custom/env.conf`: `env = QT_SCALE_FACTOR, 1` | `hl.env("QT_SCALE_FACTOR", "1")` | W56 |
 
@@ -131,15 +131,15 @@ Target `monitors.lua`: `local ext = "desc:SKYDATA S.P.A. F24G41F 0x01010101"` an
 commented alternatives (W56).
 
 `workspaces.conf` today: WS 1–3 → `monitor:DP-1` (1 default), WS 4–5 → `monitor:eDP-2`
-(single-monitor line commented). Target: `hl.workspace_rule({ workspace = "1",
-monitor = "DP-1", default = true })` etc. (TBD: exact field names). Consider switching
-`DP-1` to the `desc:` form for consistency with monitors.
+(single-monitor line commented). Target (done in Phase 1): `hl.workspace_rule({ workspace = "1",
+monitor = ext, default = true })` etc. External monitor now matched by `desc:` instead of `DP-1`
+for consistency with monitors (V6/§7 constraints).
 
 ### 3.5 hypridle (accept upstream)
 
 Same thresholds as today: lock 300 s, DPMS 600 s, suspend 900 s; `inhibit_sleep = 3`. Upstream
-`547836f1` uses `hl.dsp.dpms(false/true)`, while the 0.56.0 wiki documents
-`dpms({ action? })` (V2).
+`547836f1` uses `hl.dsp.dpms({ action = "disable" / "enable" })` (correct, see V2). Our branch
+carries it verbatim, so setup's `hypridle.conf.new` will be identical.
 
 ## 4. Quickshell fork (`shell-qml`, `~/.config/quickshell/ii`)
 
@@ -181,15 +181,42 @@ Future updates then become "re-vendor + rebase".
 | `notsuperganang/shell-qml` | `~/.config/quickshell/ii` | `pre-lua-migration` @ `461bf57` |
 | end-4/dots-hyprland | `~/.cache/dots-hyprland` | pin target `547836f1` |
 
-## 7. Open verification items
+## 7. Verification items
 
-| ID | Question | When |
+Resolved during Phase 1 (2026-10-03) by reading the Hyprland **v0.56.2** source (`hyprwm/Hyprland`
+tag `v0.56.2`) and the 0.56.0 wiki. Paths below are relative to that source tree.
+
+| ID | Question | Result |
 |---|---|---|
-| V1 | Does `hl.unbind("KEY")` remove **all** binds on that key when upstream registers two (K8, K9)? | P1 (wiki) / day H |
-| V2 | `hl.dsp.dpms(false)` (UP) vs `dpms({ action = "disable" })` (W56): which does 0.56.2 accept? | Day H (`hyprctl dispatch` test) |
-| V3 | Is the `hyprctl -j activeworkspace` / `-j workspaces` JSON shape (`.id`, `.monitor`, `.windows`) unchanged in 0.56? | Day H |
-| V4 | Exact Lua option keys: `tap-to-click` vs `tap_to_click`, the `on_focus_under_fullscreen` type, `hl.workspace_rule` fields | P1 (W56 variables page) |
-| V5 | Can upstream's lambda-based 4-finger up/down gestures be removed? If not: redefine the same gesture with a no-op function and confirm the later definition wins, or patch `hyprland/general.lua` (last resort, since it's overwritten on update) | P1 / day H |
-| V6 | Do function binds work with `switch:` keys and `{ locked = true }` (K13)? | P1 (wiki) / day H |
-| V7 | `cycle_next({ next = false })` really goes to the previous window (K6) | Day H |
-| V8 | Does Timeshift (rsync mode, `exclude: []`) include `/home`? Affects what a restore rolls back | Before day H |
+| V1 | Does `hl.unbind` remove all binds on a key? | **Yes.** `CKeybindManager::removeKeybind(displayKeys)` (`src/managers/KeybindManager.cpp`) `erase_if`s every bind whose display key matches after stripping spaces and lowercasing. **Modifier order is not normalised**, so use upstream's exact string (`"SUPER + SHIFT + S"`, not `"SHIFT + SUPER + S"`). Unbinding a key nobody bound is a silent no-op |
+| V2 | `dpms(false)` vs `dpms({ action })` | `hlDpms` (`src/config/lua/bindings/LuaBindingsDispatchers.cpp`) reads `action` from a table and defaults to **toggle** for anything else, so `dpms(false)` would toggle. Upstream dots fixed this in `f5b2b754`; `547836f1` already uses `{ action = "disable" / "enable" }`. Our `hypridle.conf` is identical to upstream |
+| V3 | `hyprctl -j` workspace JSON shape | Unchanged: `CHyprCtl::getWorkspaceData` (`src/debug/HyprCtl.cpp`) still emits `id`, `name`, `monitor`, `windows`, … |
+| V4 | Lua option keys | From the 0.56.0 variables page: `input.touchpad.tap_to_click` (underscore), `tap_button_map` string, `clickfinger_behavior` bool, `misc.on_focus_under_fullscreen` int |
+| V5 | Can lambda gestures be unset? | **Yes.** `CTrackpadGestures::removeGesture` (`src/managers/input/trackpad/TrackpadGestures.cpp`) matches fingers, direction, mods, scale and disableInhibit, **not the action** |
+| V6 | Function binds on `switch:` with `locked` | Supported (0.56.0 Binds page: function dispatchers, switches, `locked` flag). `hl.monitor()` called at runtime replaces the rule with the same `output` (`CMonitorRuleManager::add` erases by name) and schedules a monitor refresh, so it applies immediately |
+| V7 | `cycle_next({ next = false })` | `next` is a bool field read by the `cycle_next` dispatcher builder; `false` cycles backwards |
+| V8 | Does Timeshift include `/home`? | **Open.** No snapshots exist yet and reading them needs sudo. Check in the Timeshift GUI on day H (RUNBOOK §0) |
+
+### Constraints learned from the source
+
+- **Gesture shadowing:** `CTrackpadGestures::addGesture` rejects a gesture shadowed by an earlier one
+  with the same fingers and mods (e.g. `3 swipe` shadows `3 horizontal/up/down`), so **unset the
+  defaults before adding ours**. An `unset` that matches nothing is also an error.
+- Both kinds of error show up in the error banner but don't abort the rest of the file. The
+  config still loads, just without that gesture.
+- **Reload is a full reset:** the Lua config manager clears gestures, keybinds, monitor rules and
+  workspace rules before re-evaluating (`src/config/lua/ConfigManager.cpp`), so `hyprctl reload`
+  and autoreload don't cause duplicate or shadow errors.
+- `hl.monitor` fields `mode`, `position`, `scale` and `mirror` are **strings** (`"1925x2"`, `"1.33"`).
+  `hl.workspace_rule` takes `workspace` as a string plus `monitor`/`default`; `desc:` selectors work
+  (`CMonitor::matchesStaticSelector`).
+- Upstream's `quickshell/ii/modules/common/widgets/shapes` is a **git submodule**
+  (`end-4/rounded-polygon-qmljs` @ `e31ec4cb`). `git archive` skips it, so vendoring must inline it.
+
+### Automated check
+
+`docs/migration-0.56/harness/check.sh [dots-sha]` loads upstream dots plus our layer against a strict
+stub of the 0.56.2 Lua API (names taken from the `setFn` registrations; gesture, unbind and monitor
+logic copied from the C++). It exits non-zero on unknown API names, shadowed or missing gestures,
+and unknown rule fields, and prints the final gesture and bind tables. Re-run it whenever the dots
+pin or `custom/` changes.
