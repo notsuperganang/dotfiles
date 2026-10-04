@@ -39,6 +39,7 @@ for n in ("on define_submap timer dispatch version get_loaded_plugins exec_cmd c
     hl[n] = function() return nil end
 end
 hl.get_active_workspace = function() return { id = 1 } end
+hl.get_monitors = function() return {} end
 
 function hl.bind(keys, d, opts)
     if type(keys) ~= "string" then return err("hl.bind: keys must be a string") end
