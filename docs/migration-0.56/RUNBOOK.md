@@ -29,7 +29,8 @@ gone. Re-plan before continuing.
 $ git -C ~/.cache/dots-hyprland fetch
 $ git -C ~/.cache/dots-hyprland log --oneline 547836f1..origin/main
 ```
-✅ Review any commits after the pinned target. Either stay on `547836f1` or deliberately
+✅ Review any commits after the pinned target (2026-10-04: 8 commits up to `33f31a08`, decision
+D14 = **stay on `547836f1`** because `7d3e85d3` stops apps from maximizing themselves). Either stay on `547836f1` or deliberately
 move the pin (and re-check INVENTORY). If you move it, re-run the config check:
 `$ ~/dev/hypr-lua/docs/migration-0.56/harness/check.sh <new-sha>` (the worktree still exists at §0).
 

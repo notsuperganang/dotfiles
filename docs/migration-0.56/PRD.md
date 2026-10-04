@@ -60,6 +60,7 @@ affected `~/.config` dirs in `~/migration-backup/`. No external/cloud backup. | 
 | D10 | Prep workspace | `git worktree` on branch `migrate/lua-0.56` at `~/dev/hypr-lua` (branched from `main` **after** the docs commit). For `shell-qml`, a **standalone clone** at `~/dev/shell-qml` on branch `rebase/upstream`, not a worktree, because setup's `rsync --delete` wipes `~/.config/quickshell/ii/.git`, which a worktree depends on. | Lua-syntax scripts would break the running 0.54 session if placed live. |
 | D11 | Validation | Before day H: `luac -p` on every `.lua` file + review against upstream templates and the **0.56.0** wiki. On day H: `Hyprland --verify-config` before logging in. | 0.56 can't run before the upgrade. |
 | D12 | AUR | Day H = `pacman -Syu` + `./setup install` only. `yay -Sua` afterwards, separately. AGS/astal cleanup is a follow-up. | Keep the day-H blast radius small. |
+| D14 | Dots pin on day H (P1.9, 2026-10-04) | **Stay on `547836f1`.** 8 newer commits up to `33f31a08` are small fixes plus a Quickshell bump, but `7d3e85d3` adds a catch-all `suppress_event = "maximize"` window rule. | Some work tests use browsers that maximize themselves and flag "cheating" otherwise, so apps **must** be able to maximize themselves. `suppress_event` only accumulates and the upstream rule is unnamed, so it can't be undone from `custom/`. `harness/check.sh` now fails on any maximize-suppressing rule. |
 | D13 | hypridle / hyprlock | Accept upstream's new versions (Lua-syntax dispatches). They are committed **on the migration branch** because setup does not overwrite existing files on a non-first run; it only writes `*.new`. | Our `hypridle.conf` has no customisations. |
 
 ## 5. Reference versions (frozen 2026-10-03)
@@ -113,6 +114,10 @@ Follow [RUNBOOK.md](RUNBOOK.md).
 - `yay -Sua` for AUR packages.
 - Remove AGS/astal leftovers and orphans (`pacman -Qdtq`).
 - `paccache -r` once things have been stable for about a week.
+- **Next dots update** (anything at or after `7d3e85d3`): after `./setup install`, delete the
+  `hl.window_rule({match = {class = ".*" }, suppress_event = "maximize"})` line from `hyprland/rules.lua`
+  and commit that local patch (setup overwrites it every time; `check.sh` catches it). Better: ask
+  upstream to give the rule a `name` so it can be disabled from `custom/rules.lua` with `enabled = false`.
 - Clean up stale dirs: `~/.config/quickshell.backup`, `illogical-impulse.backup`,
   `swaync-backup`.
 - Quickshell keep-awake (coffee) toggle **stops working mid-session** (found 2026-10-03 on 0.54.3).
