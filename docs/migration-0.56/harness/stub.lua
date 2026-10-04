@@ -1,7 +1,7 @@
 -- Strict stub of the Hyprland 0.56.2 Lua API, built from the names registered in
 -- src/config/lua/bindings/*.cpp. Unknown names raise; gesture/unbind/monitor logic
 -- mirrors TrackpadGestures.cpp, KeybindManager.cpp and MonitorRuleManager.cpp.
-local errors, binds, gestures, monitors, wsrules, envs = {}, {}, {}, {}, {}, {}
+local errors, binds, gestures, monitors, wsrules, envs, wrules = {}, {}, {}, {}, {}, {}, {}
 local function err(msg) errors[#errors + 1] = debug.traceback(msg, 3):match("[^\n]*\n[^\n]*\n[^\n]*") end
 
 local function strict(name, t)
@@ -89,6 +89,10 @@ function hl.workspace_rule(t)
     for k in pairs(t) do if k ~= "workspace" and not WS_FIELDS[k] then err("hl.workspace_rule: unknown field '" .. k .. "'") end end
     wsrules[#wsrules + 1] = t
 end
+function hl.window_rule(t)
+    if type(t) ~= "table" then return err("hl.window_rule: argument must be a table") end
+    wrules[#wrules + 1] = { rule = t, src = debug.getinfo(2, "S").short_src }
+end
 function hl.env(k, v)
     if type(k) ~= "string" or type(v) ~= "string" then return err("hl.env: key and value must be strings") end
     envs[k] = v
@@ -97,5 +101,5 @@ setmetatable(hl, { __index = function(_, k) error("hl." .. tostring(k) .. " does
 _ = raw
 
 return function()
-    return { errors = errors, binds = binds, gestures = gestures, monitors = monitors, wsrules = wsrules, envs = envs }
+    return { errors = errors, binds = binds, gestures = gestures, monitors = monitors, wsrules = wsrules, envs = envs, wrules = wrules }
 end

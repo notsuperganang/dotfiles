@@ -52,6 +52,22 @@ for _, ours in ipairs(s.binds) do
 end
 print(("\nbind collisions with upstream: %d"):format(collisions))
 
+-- Some apps (e.g. browsers for proctored work tests) must be able to maximize themselves.
+-- suppress_event only accumulates (Window.cpp ORs the bits) and upstream rules are unnamed,
+-- so a catch-all "maximize" suppression can't be undone from custom/ — flag it loudly.
+local maxSuppress = 0
+for _, w in ipairs(s.wrules) do
+    local ev = w.rule.suppress_event
+    local events = type(ev) == "table" and table.concat(ev, " ") or tostring(ev or "")
+    if events:find("maximize") then
+        local m = w.rule.match or {}
+        maxSuppress = maxSuppress + 1
+        print(("  ! window rule suppresses maximize (match class=%s title=%s) in %s"):format(
+            tostring(m.class), tostring(m.title), w.src:match("[^/]+$")))
+    end
+end
+print(("\nmaximize-suppressing window rules: %d"):format(maxSuppress))
+
 print("\nmonitors:")
 for o, r in pairs(s.monitors) do
     local parts = {}
@@ -63,4 +79,4 @@ print("\nworkspace rules:")
 for _, w in ipairs(s.wsrules) do print(("  ws %s -> %s%s"):format(w.workspace, tostring(w.monitor), w.default and " (default)" or "")) end
 print("\nenv QT_SCALE_FACTOR=" .. tostring(s.envs.QT_SCALE_FACTOR) .. "  qsConfig=" .. tostring(s.envs.qsConfig))
 
-if not ok or #s.errors > 0 or collisions > 0 then os.exit(1) end
+if not ok or #s.errors > 0 or collisions > 0 or maxSuppress > 0 then os.exit(1) end
