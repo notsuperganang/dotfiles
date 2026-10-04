@@ -5,61 +5,225 @@
     {
       "name": "Kiri-kanan",
       "monitors": [
-        { "output": "eDP-2", "label": "Layar laptop", "enabled": true, "mode": "2560x1440@165", "x": 0, "y": 0, "scale": 1.333333, "transform": 0, "mirror": "" },
-        { "output": "desc:SKYDATA S.P.A. F24G41F 0x01010101", "label": "SKYDATA F24G41F", "enabled": true, "mode": "1920x1080@240", "x": 1925, "y": 2, "scale": 1, "transform": 0, "mirror": "" }
+        {
+          "output": "eDP-2",
+          "label": "Layar laptop",
+          "enabled": true,
+          "mode": "2560x1440@165",
+          "x": 0,
+          "y": 0,
+          "scale": 1.333333,
+          "transform": 0,
+          "mirror": ""
+        },
+        {
+          "output": "desc:SKYDATA S.P.A. F24G41F 0x01010101",
+          "label": "SKYDATA F24G41F",
+          "enabled": true,
+          "mode": "1920x1080@240",
+          "x": 1925,
+          "y": 2,
+          "scale": 1,
+          "transform": 0,
+          "mirror": ""
+        }
       ],
       "workspaces": [
-        { "workspace": 1, "output": "desc:SKYDATA S.P.A. F24G41F 0x01010101", "default": true },
-        { "workspace": 2, "output": "desc:SKYDATA S.P.A. F24G41F 0x01010101", "default": false },
-        { "workspace": 3, "output": "desc:SKYDATA S.P.A. F24G41F 0x01010101", "default": false },
-        { "workspace": 4, "output": "eDP-2", "default": false },
-        { "workspace": 5, "output": "eDP-2", "default": false }
+        {
+          "workspace": 1,
+          "output": "desc:SKYDATA S.P.A. F24G41F 0x01010101",
+          "default": true
+        },
+        {
+          "workspace": 2,
+          "output": "desc:SKYDATA S.P.A. F24G41F 0x01010101",
+          "default": false
+        },
+        {
+          "workspace": 3,
+          "output": "desc:SKYDATA S.P.A. F24G41F 0x01010101",
+          "default": false
+        },
+        {
+          "workspace": 4,
+          "output": "eDP-2",
+          "default": false
+        },
+        {
+          "workspace": 5,
+          "output": "eDP-2",
+          "default": false
+        }
       ]
     },
     {
       "name": "Atas-bawah",
       "monitors": [
-        { "output": "eDP-2", "label": "Layar laptop", "enabled": true, "mode": "2560x1440@165", "x": 0, "y": 1080, "scale": 1.333333, "transform": 0, "mirror": "" },
-        { "output": "desc:SKYDATA S.P.A. F24G41F 0x01010101", "label": "SKYDATA F24G41F", "enabled": true, "mode": "1920x1080@240", "x": 320, "y": 0, "scale": 1, "transform": 0, "mirror": "" }
+        {
+          "output": "eDP-2",
+          "label": "Layar laptop",
+          "enabled": true,
+          "mode": "2560x1440@165",
+          "x": 0,
+          "y": 1080,
+          "scale": 1.333333,
+          "transform": 0,
+          "mirror": ""
+        },
+        {
+          "output": "desc:SKYDATA S.P.A. F24G41F 0x01010101",
+          "label": "SKYDATA F24G41F",
+          "enabled": true,
+          "mode": "1920x1080@240",
+          "x": 0,
+          "y": 0,
+          "scale": 1,
+          "transform": 0,
+          "mirror": ""
+        }
       ],
       "workspaces": [
-        { "workspace": 1, "output": "desc:SKYDATA S.P.A. F24G41F 0x01010101", "default": true },
-        { "workspace": 2, "output": "desc:SKYDATA S.P.A. F24G41F 0x01010101", "default": false },
-        { "workspace": 3, "output": "desc:SKYDATA S.P.A. F24G41F 0x01010101", "default": false },
-        { "workspace": 4, "output": "eDP-2", "default": false },
-        { "workspace": 5, "output": "eDP-2", "default": false }
+        {
+          "workspace": 1,
+          "output": "desc:SKYDATA S.P.A. F24G41F 0x01010101",
+          "default": true
+        },
+        {
+          "workspace": 2,
+          "output": "desc:SKYDATA S.P.A. F24G41F 0x01010101",
+          "default": false
+        },
+        {
+          "workspace": 3,
+          "output": "desc:SKYDATA S.P.A. F24G41F 0x01010101",
+          "default": false
+        },
+        {
+          "workspace": 4,
+          "output": "eDP-2",
+          "default": false
+        },
+        {
+          "workspace": 5,
+          "output": "eDP-2",
+          "default": false
+        }
       ]
     },
     {
       "name": "Presentasi (mirror)",
       "monitors": [
-        { "output": "eDP-2", "label": "Layar laptop", "enabled": true, "mode": "2560x1440@165", "x": 0, "y": 0, "scale": 1.333333, "transform": 0, "mirror": "" },
-        { "output": "desc:SKYDATA S.P.A. F24G41F 0x01010101", "label": "SKYDATA F24G41F", "enabled": true, "mode": "1920x1080@60", "x": 0, "y": 0, "scale": 1, "transform": 0, "mirror": "eDP-2" }
+        {
+          "output": "eDP-2",
+          "label": "Layar laptop",
+          "enabled": true,
+          "mode": "2560x1440@165",
+          "x": 0,
+          "y": 0,
+          "scale": 1.333333,
+          "transform": 0,
+          "mirror": ""
+        },
+        {
+          "output": "desc:SKYDATA S.P.A. F24G41F 0x01010101",
+          "label": "SKYDATA F24G41F",
+          "enabled": true,
+          "mode": "1920x1080@60",
+          "x": 0,
+          "y": 0,
+          "scale": 1,
+          "transform": 0,
+          "mirror": "eDP-2"
+        }
       ],
       "workspaces": []
     },
     {
       "name": "Extended kiri",
       "monitors": [
-        { "output": "eDP-2", "label": "Layar laptop", "enabled": true, "mode": "2560x1440@165", "x": 0, "y": 0, "scale": 1.333333, "transform": 0, "mirror": "" },
-        { "output": "desc:SKYDATA S.P.A. F24G41F 0x01010101", "label": "SKYDATA F24G41F", "enabled": true, "mode": "1920x1080@60", "x": -1920, "y": 0, "scale": 1, "transform": 0, "mirror": "" }
+        {
+          "output": "eDP-2",
+          "label": "Layar laptop",
+          "enabled": true,
+          "mode": "2560x1440@165",
+          "x": 0,
+          "y": 0,
+          "scale": 1.333333,
+          "transform": 0,
+          "mirror": ""
+        },
+        {
+          "output": "desc:SKYDATA S.P.A. F24G41F 0x01010101",
+          "label": "SKYDATA F24G41F",
+          "enabled": true,
+          "mode": "1920x1080@60",
+          "x": -1920,
+          "y": 0,
+          "scale": 1,
+          "transform": 0,
+          "mirror": ""
+        }
       ],
       "workspaces": [
-        { "workspace": 1, "output": "desc:SKYDATA S.P.A. F24G41F 0x01010101", "default": true },
-        { "workspace": 2, "output": "desc:SKYDATA S.P.A. F24G41F 0x01010101", "default": false },
-        { "workspace": 3, "output": "desc:SKYDATA S.P.A. F24G41F 0x01010101", "default": false },
-        { "workspace": 4, "output": "eDP-2", "default": false },
-        { "workspace": 5, "output": "eDP-2", "default": false }
+        {
+          "workspace": 1,
+          "output": "desc:SKYDATA S.P.A. F24G41F 0x01010101",
+          "default": true
+        },
+        {
+          "workspace": 2,
+          "output": "desc:SKYDATA S.P.A. F24G41F 0x01010101",
+          "default": false
+        },
+        {
+          "workspace": 3,
+          "output": "desc:SKYDATA S.P.A. F24G41F 0x01010101",
+          "default": false
+        },
+        {
+          "workspace": 4,
+          "output": "eDP-2",
+          "default": false
+        },
+        {
+          "workspace": 5,
+          "output": "eDP-2",
+          "default": false
+        }
       ]
     },
     {
       "name": "Laptop saja",
       "monitors": [
-        { "output": "eDP-2", "label": "Layar laptop", "enabled": true, "mode": "2560x1440@165", "x": 0, "y": 0, "scale": 1.333333, "transform": 0, "mirror": "" },
-        { "output": "desc:SKYDATA S.P.A. F24G41F 0x01010101", "label": "SKYDATA F24G41F", "enabled": false, "mode": "1920x1080@240", "x": 1925, "y": 2, "scale": 1, "transform": 0, "mirror": "" }
+        {
+          "output": "eDP-2",
+          "label": "Layar laptop",
+          "enabled": true,
+          "mode": "2560x1440@165",
+          "x": 0,
+          "y": 0,
+          "scale": 1.333333,
+          "transform": 0,
+          "mirror": ""
+        },
+        {
+          "output": "desc:SKYDATA S.P.A. F24G41F 0x01010101",
+          "label": "SKYDATA F24G41F",
+          "enabled": false,
+          "mode": "1920x1080@240",
+          "x": 1925,
+          "y": 2,
+          "scale": 1,
+          "transform": 0,
+          "mirror": ""
+        }
       ],
       "workspaces": [
-        { "workspace": 1, "output": "eDP-2", "default": true }
+        {
+          "workspace": 1,
+          "output": "eDP-2",
+          "default": true
+        }
       ]
     }
   ]
