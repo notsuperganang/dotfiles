@@ -27,10 +27,10 @@ gone. Re-plan before continuing.
 
 ```sh
 $ git -C ~/.cache/dots-hyprland fetch
-$ git -C ~/.cache/dots-hyprland log --oneline 547836f1..origin/main
+$ git -C ~/.cache/dots-hyprland log --oneline 33f31a08..origin/main
 ```
-✅ Review any commits after the pinned target (2026-10-04: 8 commits up to `33f31a08`, decision
-D14 = **stay on `547836f1`** because `7d3e85d3` stops apps from maximizing themselves). Either stay on `547836f1` or deliberately
+✅ Review any commits after the pinned target. (2026-10-04: the pin moved from `547836f1` to `33f31a08`,
+decision D14; `7d3e85d3`'s maximize suppression is neutralised in `custom/env.lua`.) Either stay on `33f31a08` or deliberately
 move the pin (and re-check INVENTORY). If you move it, re-run the config check:
 `$ ~/dev/hypr-lua/docs/migration-0.56/harness/check.sh <new-sha>` (the worktree still exists at §0).
 
@@ -150,7 +150,7 @@ $ git -C ~/.config/hypr switch migrate/lua-0.56
 ```sh
 $ cd ~/.cache/dots-hyprland
 $ git stash            # setup may have left local changes
-$ git checkout 547836f1   # or the pin agreed in §0
+$ git checkout 33f31a08   # or the pin agreed in §0
 $ git submodule update --init --recursive
 $ ./setup install
 ```
@@ -183,7 +183,7 @@ $ git status --short          # review: hyprland/*.conf deleted, hyprland/*.lua 
                               # maybe hyprland.conf.old; hypridle/hyprlock unchanged (*.new handled in §5)
 $ ls custom/                  # ✅ our *.lua untouched (setup only creates placeholders if missing)
 $ rm -f hyprland.conf.old     # still recoverable from the pre-lua-migration tag
-$ git add -A && git commit -m "chore: install end-4/dots-hyprland @ 547836f1 (Lua)"
+$ git add -A && git commit -m "chore: install end-4/dots-hyprland @ 33f31a08 (Lua)"
 ```
 Do **not** merge into `main` yet. That happens after verification (§7).
 
@@ -233,6 +233,9 @@ live:
 - `hyprctl -j activeworkspace | jq '.id, .monitor'` prints sensible values (used by the ws scripts)
 - the error banner is empty (no shadowed or unset-missing gestures, no unknown fields)
 - every bind and gesture in INVENTORY §3.1/§3.2, including lid close/open with the external monitor connected
+- **apps can maximize themselves (D14)**: open a browser/app that requests maximize on start (e.g. the
+  work-test browser, or a browser window closed while maximized) and confirm it comes up maximized.
+  `hyprctl clients -j | jq '.[] | {class, fullscreen}'` shows `fullscreen: 1` for maximized windows
 
 Then spot-check the mainline kernel: reboot, pick `linux` in GRUB, confirm the session and the
 external monitor work, and reboot back to lts.

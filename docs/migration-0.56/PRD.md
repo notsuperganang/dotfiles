@@ -60,7 +60,7 @@ affected `~/.config` dirs in `~/migration-backup/`. No external/cloud backup. | 
 | D10 | Prep workspace | `git worktree` on branch `migrate/lua-0.56` at `~/dev/hypr-lua` (branched from `main` **after** the docs commit). For `shell-qml`, a **standalone clone** at `~/dev/shell-qml` on branch `rebase/upstream`, not a worktree, because setup's `rsync --delete` wipes `~/.config/quickshell/ii/.git`, which a worktree depends on. | Lua-syntax scripts would break the running 0.54 session if placed live. |
 | D11 | Validation | Before day H: `luac -p` on every `.lua` file + review against upstream templates and the **0.56.0** wiki. On day H: `Hyprland --verify-config` before logging in. | 0.56 can't run before the upgrade. |
 | D12 | AUR | Day H = `pacman -Syu` + `./setup install` only. `yay -Sua` afterwards, separately. AGS/astal cleanup is a follow-up. | Keep the day-H blast radius small. |
-| D14 | Dots pin on day H (P1.9, 2026-10-04) | **Stay on `547836f1`.** 8 newer commits up to `33f31a08` are small fixes plus a Quickshell bump, but `7d3e85d3` adds a catch-all `suppress_event = "maximize"` window rule. | Some work tests use browsers that maximize themselves and flag "cheating" otherwise, so apps **must** be able to maximize themselves. `suppress_event` only accumulates and the upstream rule is unnamed, so it can't be undone from `custom/`. `harness/check.sh` now fails on any maximize-suppressing rule. |
+| D14 | Dots pin on day H (P1.9, 2026-10-04) | **Move to `33f31a08`**, the latest at the time: 8 small fixes plus a Quickshell build bump. `7d3e85d3` among them adds a catch-all `suppress_event = "maximize"` window rule, which we neutralise with a `hl.window_rule` wrapper in `custom/env.lua`. The Quickshell fork was re-vendored to match. | Some work tests use browsers that maximize themselves and flag "cheating" otherwise, so apps **must** be able to maximize themselves. `suppress_event` only accumulates and the upstream rule is unnamed, so it can't be undone from `custom/rules.lua`; `custom/env.lua` is the only custom file loaded before `hyprland/rules.lua`. The wrapper survives dots updates. `harness/check.sh` fails if a maximize-suppressing rule gets through (verified: exactly 1 of 64 rules dropped). |
 | D13 | hypridle / hyprlock | Accept upstream's new versions (Lua-syntax dispatches). They are committed **on the migration branch** because setup does not overwrite existing files on a non-first run; it only writes `*.new`. | Our `hypridle.conf` has no customisations. |
 
 ## 5. Reference versions (frozen 2026-10-03)
@@ -68,7 +68,7 @@ affected `~/.config` dirs in `~/migration-backup/`. No external/cloud backup. | 
 | Thing | Current | Target |
 |---|---|---|
 | Hyprland | 0.54.3-4 | 0.56.2-3 (repo). **If the repo shows 0.57.x on day H → stop and re-plan.** |
-| dots-hyprland (`~/.cache/dots-hyprland`) | `a2c16410` (2026-04-18) | `547836f1` (pinned; review any newer commits before moving the target) |
+| dots-hyprland (`~/.cache/dots-hyprland`) | `a2c16410` (2026-04-18) | `33f31a08` (moved from `547836f1` on 2026-10-04, D14; review any newer commits before moving it again) |
 | dots pre-Lua release tag | — | `2026.05.11` (reference only) |
 | `hypr` repo (`notsuperganang/dotfiles`) | `8ad19d6` | branch `migrate/lua-0.56` |
 | `shell-qml` repo (Quickshell fork) | `461bf57` | branch `rebase/upstream` |
@@ -114,10 +114,9 @@ Follow [RUNBOOK.md](RUNBOOK.md).
 - `yay -Sua` for AUR packages.
 - Remove AGS/astal leftovers and orphans (`pacman -Qdtq`).
 - `paccache -r` once things have been stable for about a week.
-- **Next dots update** (anything at or after `7d3e85d3`): after `./setup install`, delete the
-  `hl.window_rule({match = {class = ".*" }, suppress_event = "maximize"})` line from `hyprland/rules.lua`
-  and commit that local patch (setup overwrites it every time; `check.sh` catches it). Better: ask
-  upstream to give the rule a `name` so it can be disabled from `custom/rules.lua` with `enabled = false`.
+- Maximize wrapper (D14): consider asking upstream to give the catch-all `suppress_event = "maximize"`
+  rule a `name`, so it can be disabled from `custom/rules.lua` with `enabled = false` and the
+  `custom/env.lua` wrapper can go. Until then, re-run `check.sh` on every dots update.
 - Clean up stale dirs: `~/.config/quickshell.backup`, `illogical-impulse.backup`,
   `swaync-backup`.
 - Quickshell keep-awake (coffee) toggle **stops working mid-session** (found 2026-10-03 on 0.54.3).
@@ -145,6 +144,7 @@ Day H counts as done when all of the following hold after a reboot into **linux-
       dock IPC toggle work.
 - [ ] hypridle: lock at 5 min, DPMS off/on at 10 min, suspend at 15 min; resume
       re-focuses the lock screen.
+- [ ] Apps can still maximize themselves (D14): a browser that requests maximize comes up maximized.
 - [ ] Kitty and mpv customisations are restored (INVENTORY §5).
 - [ ] The `linux` (mainline) kernel also boots to a working session (spot check).
 - [ ] `hypr` and `shell-qml` changes are merged and pushed.

@@ -4,7 +4,7 @@ This is the source of truth for "what must still work after migration". Each map
 names the source of its new syntax:
 
 - **W56**: Hyprland wiki 0.56.0 (`wiki.hypr.land/0.56.0/...`)
-- **UP**: upstream dots-hyprland `547836f1`
+- **UP**: upstream dots-hyprland `547836f1` (planning pin; day-H pin is `33f31a08`, see PRD D14)
 - **src**: confirmed in the Hyprland v0.56.2 source (§7)
 
 ## 1. Machine
@@ -157,7 +157,8 @@ carries it verbatim, so setup's `hypridle.conf.new` will be identical.
 
 Re-baseline plan (P1.6), done in a standalone clone `~/dev/shell-qml` (not a worktree; see
 PRD D10): new branch `rebase/upstream` whose first commit is
-"vendor upstream quickshell/ii @ 547836f1", followed by the three re-applied commits.
+"vendor upstream quickshell/ii @ 547836f1", followed by the three re-applied commits, then
+"re-vendor upstream quickshell/ii @ 33f31a08" (2026-10-04; only `services/SystemInfo.qml` changed).
 Future updates then become "re-vendor + rebase".
 
 ## 5. Non-hypr files that `./setup install` will clobber
@@ -179,7 +180,7 @@ Future updates then become "re-vendor + rebase".
 |---|---|---|
 | `notsuperganang/dotfiles` | `~/.config/hypr` | `pre-lua-migration` @ current `main` |
 | `notsuperganang/shell-qml` | `~/.config/quickshell/ii` | `pre-lua-migration` @ `461bf57` |
-| end-4/dots-hyprland | `~/.cache/dots-hyprland` | pin target `547836f1` |
+| end-4/dots-hyprland | `~/.cache/dots-hyprland` | pin target `33f31a08` (moved from `547836f1` on 2026-10-04, PRD D14) |
 
 ## 7. Verification items
 
