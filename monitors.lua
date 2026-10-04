@@ -2,7 +2,34 @@
 -- Do not edit by hand: it is overwritten on the next apply.
 -- Profiles live in ~/.config/hypr/displays/profiles.json.
 
+local function lid_closed()
+    for _, name in ipairs({ "LID0", "LID", "LID1" }) do
+        local f = io.open("/proc/acpi/button/lid/" .. name .. "/state")
+        if f then
+            local state = f:read("*a") or ""
+            f:close()
+            return state:find("closed") ~= nil
+        end
+    end
+    return false
+end
+
+local function external_connected()
+    for _, m in pairs(hl.get_monitors()) do
+        if not (m.name:match("^eDP%-") or m.name:match("^LVDS%-") or m.name:match("^DSI%-")) then
+            return true
+        end
+    end
+    return false
+end
+
+local docked_with_lid_closed = lid_closed() and external_connected()
+
 -- Layar laptop
-hl.monitor({ output = "eDP-2", mode = "2560x1440@165", position = "0x0", scale = "1.333333" })
+if docked_with_lid_closed then
+    hl.monitor({ output = "eDP-2", disabled = true })
+else
+    hl.monitor({ output = "eDP-2", mode = "2560x1440@165", position = "0x0", scale = "1.333333" })
+end
 -- SKYDATA F24G41F
 hl.monitor({ output = "desc:SKYDATA S.P.A. F24G41F 0x01010101", mode = "1920x1080@240", position = "1925x2", scale = "1" })
