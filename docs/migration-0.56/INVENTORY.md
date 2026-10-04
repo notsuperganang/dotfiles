@@ -104,6 +104,7 @@ Other settings to carry over:
 | S3 | `input.touchpad.tap-to-click = true` | same block, key `tap_to_click` | W56 (V4) |
 | S4 | `input.touchpad.tap_button_map = lrm` | same block | W56 |
 | S5 | `custom/env.conf`: `env = QT_SCALE_FACTOR, 1` | `hl.env("QT_SCALE_FACTOR", "1")` | W56 |
+| S6 | (implicit) old upstream `$terminal` started with `"kitty -1"` | `custom/variables.lua` sets `terminal` with kitty first; upstream Lua puts foot first and dots' `foot.ini` runs fish (found on day H) | UP |
 
 ### 3.3 Scripts (`custom/scripts/`)
 

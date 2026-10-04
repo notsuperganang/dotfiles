@@ -100,6 +100,9 @@ affected `~/.config` dirs in `~/migration-backup/`. No external/cloud backup. | 
     here until RUNBOOK §7, **no commits on `main`**. Day-H notes (including the RUNBOOK
     outcome log) go on the branch, so the final `merge --ff-only` works.
 
+**Status (2026-10-04): Day H done.** Hyprland 0.56.2 on Lua config, merged to `main`. Remaining:
+the mainline-kernel spot check and the Phase 3 follow-ups.
+
 **Status (2026-10-03):** P1.1–P1.8 done on `migrate/lua-0.56` (hypr) and `rebase/upstream`
 (`~/dev/shell-qml`). The config check (`harness/check.sh`) passes with 0 errors. V1–V7 were
 resolved from the v0.56.2 source (INVENTORY §7). Remaining: P1.9 just before day H, and P1.10
@@ -134,20 +137,21 @@ Follow [RUNBOOK.md](RUNBOOK.md).
 
 Day H counts as done when all of the following hold after a reboot into **linux-lts**:
 
-- [ ] `pacman -Qu` is empty and `IgnorePkg` no longer lists `hyprland`.
-- [ ] `hyprctl version` reports 0.56.x and `~/.config/hypr/hyprland.lua` is the loaded config
+- [x] `pacman -Qu` is empty and `IgnorePkg` no longer lists `hyprland`.
+- [x] `hyprctl version` reports 0.56.x and `~/.config/hypr/hyprland.lua` is the loaded config
       (no hyprlang deprecation banner, no config errors).
-- [ ] `dkms status` shows nvidia 615.x `installed` for **both** kernels.
-- [ ] The external monitor (SKYDATA, via NVIDIA DP-1) comes up in Layout B at 240 Hz.
-- [ ] Every row of the INVENTORY §3 parity table passes.
-- [ ] Quickshell runs from the `shell-qml` `rebase/upstream` branch; screenshot-save and
+- [x] `dkms status` shows nvidia 615.x `installed` for **both** kernels.
+- [x] The external monitor (SKYDATA, via NVIDIA DP-1) comes up in Layout B at 240 Hz.
+- [x] Every row of the INVENTORY §3 parity table passes.
+- [x] Quickshell runs from the `shell-qml` `rebase/upstream` branch; screenshot-save and
       dock IPC toggle work.
-- [ ] hypridle: lock at 5 min, DPMS off/on at 10 min, suspend at 15 min; resume
+- [~] hypridle: running with the Lua-syntax config and manual lock (Super+L) works; the 5/10/15 min
+      timings weren't watched on day H. Re-check in normal use. Lock at 5 min, DPMS off/on at 10 min, suspend at 15 min; resume
       re-focuses the lock screen.
-- [ ] Apps can still maximize themselves (D14): a browser that requests maximize comes up maximized.
-- [ ] Kitty and mpv customisations are restored (INVENTORY §5).
+- [x] Apps can still maximize themselves (D14): a browser that requests maximize comes up maximized.
+- [x] Kitty and mpv customisations are restored (INVENTORY §5).
 - [ ] The `linux` (mainline) kernel also boots to a working session (spot check).
-- [ ] `hypr` and `shell-qml` changes are merged and pushed.
+- [x] `hypr` and `shell-qml` changes are merged and pushed.
 
 ## 8. Risks
 

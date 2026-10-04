@@ -339,3 +339,15 @@ _(fill in on day H, on the `migrate/lua-0.56` branch)_
 - **§6**: fork cloned from `~/dev/shell-qml` (`rebase/upstream`); only our 4 files differ from setup's
   copy; `.claude/` restored from the tarball. kitty (+ `current-theme.conf`) and mpv restored verbatim.
 - **§7** (pre-login): `Hyprland --verify-config` → `config ok`.
+- **§7** (post-reboot, linux-lts): Hyprland 0.56.2, `hyprctl configerrors` empty, no failed units (the
+  baseline `plasma-xdg-desktop-portal-kde` failure is gone too). Monitors: eDP-2 2560×1440@165 ×1.33 at 0x0,
+  DP-1 SKYDATA 1920×1080@240 at 1925x2 (Layout B); ws 1–2 → DP-1 via `desc:`, ws 4 → eDP-2. NVIDIA 615.71.09
+  loaded. 11 `User:` binds registered; Super+D/A/Tab/Shift+S each have exactly one bind; no Super-tap
+  search binds; both lid binds `locked=true`. The user walked the parity checklist (binds, cook mode, gestures,
+  lid, self-maximize, screenshot save, dock, lock): **all OK**.
+  - **Regression found & fixed:** terminals opened **foot → fish** because upstream moved foot ahead of
+    kitty in `terminal` (and dots' `foot.ini` has `shell=fish`); the login shell was still zsh. Fixed in
+    `custom/variables.lua` (kitty first), commit `efa595e`.
+  - EasyEffects isn't installed (never was; the old `exec-once` failed silently too). Not a regression.
+- Merged `migrate/lua-0.56` → `main` (ff) and pushed; shell-qml `main` fast-forwarded to `rebase/upstream`.
+- **Not done yet:** mainline kernel (`linux` 7.2.8) spot check; hypridle timings in normal use.
