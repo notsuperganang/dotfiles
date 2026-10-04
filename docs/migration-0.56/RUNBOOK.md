@@ -311,3 +311,31 @@ _(fill in on day H, on the `migrate/lua-0.56` branch)_
   `~/migration-backup/config-pre-lua-2026-10-04.tar.zst` (1385 files) + `pacman.conf.pre`;
   Timeshift `2026-10-04_07-40-01` "pre-lua-migration (hyprland 0.54.3)": 27 s, 21.6 MB (linked to
   `2026-10-03_22-08-23`).
+- **§2**: logged out to TTY. The external monitor stays dark on the console (it hangs off the NVIDIA
+  GPU; fbcon is on the AMD iGPU), so keep the lid **open**. Shift+PgUp scrollback no longer exists
+  (removed in kernel 5.9), so wrap long commands in `script -q -e -c "…" log`.
+- **§3** (08:00–08:50), three attempts:
+  1. `pacman -Su` → *ntfs-3g breaks dependency 'ntfsprogs' required by woeusb-ng*: ntfsprogs is now a
+     separate package → add `ntfsprogs` to the transaction.
+  2. download aborted (*Operation too slow* on `mirror.sg.cdn-perfprod.com`) → `--disable-download-timeout`.
+  3. 98 file conflicts under `/usr/lib/node_modules/npm/` (npm had been self-updated to 12.0.1, leaving
+     unowned files) → `--overwrite '/usr/lib/node_modules/npm/*'` (repo npm 12.2.0 is newer).
+  Final command: `sudo pacman -Su ntfsprogs --disable-download-timeout --overwrite '/usr/lib/node_modules/npm/*'`
+  → exit 0, 824 packages. Expected hook error: Quickshell symbol lookup after the Qt6 update (rebuilt in §5).
+  `.pacnew`: locale.gen, mirrorlist, 2× tpm2-tss profiles (not boot-critical; review later).
+- **§4**: DKMS nvidia 615.71.09 built for 7.2.8-arch1-2 and 6.18.54-2-lts; all 3 initramfs OK.
+  **Deviation:** this machine has custom Secure Boot hooks (`/etc/pacman.d/hooks/99-secureboot-grub.hook`
+  → `/usr/local/bin/regenerate-grub-secureboot.sh`: `grub-install` with a module list + `--sbat`, then
+  `sbsign` with `/etc/mok/MOK.*`; `99-secureboot-kernel.hook` signs kernels). It already re-installed and
+  signed GRUB, so the manual `grub-install` was **skipped** (it would have produced an unsigned GRUB without
+  the module list). Only `grub-mkconfig` was run: lts first → default "Arch Linux" = linux-lts. Firmware
+  SecureBoot efivar = 0 (currently disabled). Single GRUB EFI entry.
+- **§5** (08:52–09:04): `./setup install -s` (skip sysupdate) at `33f31a08`. MicroTeX build failed:
+  the cached clone `sdata/dist-arch/illogical-impulse-microtex-git/MicroTeX` pointed at the old
+  `NanoMichael/MicroTeX` URL (upstream moved to `end-4/MicroTeX`) → deleted `MicroTeX/` and `src/`, retried
+  OK. uv asked to replace the Quickshell venv → yes (it's recreated and requirements reinstalled).
+  Quickshell rebuilt: 0.3.1 rev `41651d7`. `hypridle.conf.new`/`hyprlock.conf.new` identical → removed.
+  Committed as `8f76b6c`.
+- **§6**: fork cloned from `~/dev/shell-qml` (`rebase/upstream`); only our 4 files differ from setup's
+  copy; `.claude/` restored from the tarball. kitty (+ `current-theme.conf`) and mpv restored verbatim.
+- **§7** (pre-login): `Hyprland --verify-config` → `config ok`.
