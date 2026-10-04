@@ -300,3 +300,14 @@ Re-add `IgnorePkg = hyprland`. You're back at the 2026-10-03 state. Re-plan befo
 ## Outcome log
 
 _(fill in on day H, on the `migrate/lua-0.56` branch)_
+
+### 2026-10-04
+
+- **P1.9** (07:2x): repo Hyprland = 0.56.2-4 (not 0.57). dots had 8 new commits; pin moved
+  `547836f1` → `33f31a08` (D14) with the maximize wrapper in `custom/env.lua`; fork re-vendored.
+- **§0** (07:3x): `/` 162 GB free, ESP 57 MB free; no failed system units; baseline failed user unit
+  `plasma-xdg-desktop-portal-kde` (pre-existing); kernel `6.18.33-1-lts`; AC power, battery 98 %.
+- **§1** (07:35–07:40): tags `pre-lua-migration` pushed (hypr @ `37d6dbf`, shell-qml @ `461bf57`);
+  `~/migration-backup/config-pre-lua-2026-10-04.tar.zst` (1385 files) + `pacman.conf.pre`;
+  Timeshift `2026-10-04_07-40-01` "pre-lua-migration (hyprland 0.54.3)": 27 s, 21.6 MB (linked to
+  `2026-10-03_22-08-23`).
