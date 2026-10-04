@@ -1,6 +1,6 @@
 # ADR-0005: Hand-written monitors.lua; drop nwg-displays
 
-Status: Accepted · 2026-10-03
+Status: Superseded by [ADR-0007](0007-display-settings-page.md) (2026-10-04) · originally accepted 2026-10-03
 
 ## Context
 Upstream dots load `monitors.lua`/`workspaces.lua` when present (the hook for nwg-displays).

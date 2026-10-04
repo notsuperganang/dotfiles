@@ -151,6 +151,7 @@ carries it verbatim, so setup's `hypridle.conf.new` will be identical.
 
 | Commit | Change | Files | Re-apply? |
 |---|---|---|---|
+| `b3a0ca1`, `be3a70e`, `d08023b`, `751e3da`, `67bc25a` (2026-10-04) | Display settings page + `Displays` service (ADR-0007) | `services/Displays.qml`, `modules/settings/DisplayConfig.qml`, `settings.qml` | **Yes** (fork-only feature) |
 | `2934bc9` | `quickshell:regionScreenshotSave` global shortcut (save to `~/Pictures/Screenshots`) | `modules/ii/regionSelector/RegionSelection.qml`, `RegionSelector.qml` | **Yes** |
 | `6ce88c2` | Sequential crop+copy instead of process substitution for save mode | `modules/common/utils/ScreenshotAction.qml` | **Yes** |
 | `6c9a376` | `dock toggle` IPC to force-reveal the dock | `modules/ii/dock/Dock.qml` | **Yes** |

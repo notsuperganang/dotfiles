@@ -27,8 +27,9 @@
 │   ├── env.lua
 │   ├── rules.lua
 │   └── scripts/
-├── monitors.lua         # monitor layout (hand-written, toggle by comment)
-├── workspaces.lua       # workspace → monitor mapping
+├── displays/profiles.json # display profiles — edit via Settings → Display
+├── monitors.lua         # GENERATED from the active display profile — don't hand-edit
+├── workspaces.lua       # GENERATED (workspace → monitor) — don't hand-edit
 ├── hyprlock.conf        # hyprlock/hypridle still use hyprlang
 ├── hypridle.conf
 └── docs/migration-0.56/ # Lua migration plan, runbook and config check
