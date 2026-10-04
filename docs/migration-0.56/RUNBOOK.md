@@ -360,3 +360,10 @@ _(fill in on day H, on the `migrate/lua-0.56` branch)_
     registered". The files came back with the merge; `hyprctl reload` restored all 198 binds. The merge
     step above now fast-forwards the ref with `git push . branch:main` instead.
 - **Not done yet:** mainline kernel (`linux` 7.2.8) spot check; hypridle timings in normal use.
+- **Post-migration (2026-10-04 ~10:00–10:30):** `yay -Syu` (removed the orphan Qt5 chain first: qt5-webengine,
+  qt5-location, qt5-webchannel, qt5-remoteobjects, kirigami2, accounts-qml-module, plus foot). Cleanup: yay/pip/uv/
+  thumbnail/Hugging Face caches (~45 GB); `pkg-cleanup.sh` removed 40 `-debug` packages, the AGS/astal stack,
+  electron34/37/39, cef, js128 and the KF5 leftovers (npm marked explicit first, because AGS had pulled it in);
+  journal trimmed to ~200 MB. Free space on `/`: 148 → 195 GB.
+- **Timeshift:** new baseline `2026-10-04_10-20-04` "post-lua-migration (hyprland 0.56.2, stable)" (374 s, ~10 GB).
+  Dry-run snapshot deleted. **Delete `2026-10-04_07-40-01` (pre-lua-migration) around 2026-10-18** if still stable.
