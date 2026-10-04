@@ -3,11 +3,11 @@
 # Hyprland 0.56.2 Lua API, and print the resulting gestures, key binds and rules.
 #
 # usage: check.sh [dots-sha] [hypr-config-dir]
-#   dots-sha         end-4/dots-hyprland commit to take hyprland/ + hyprland.lua from (default: 547836f1)
+#   dots-sha         end-4/dots-hyprland commit to take hyprland/ + hyprland.lua from (default: 33f31a08)
 #   hypr-config-dir  dir holding our custom/, monitors.lua, workspaces.lua (default: repo root)
 set -euo pipefail
 here="$(cd "$(dirname "$0")" && pwd)"
-sha="${1:-547836f1}"
+sha="${1:-33f31a08}"
 src="${2:-$(git -C "$here" rev-parse --show-toplevel)}"
 dots="${DOTS_REPO:-$HOME/.cache/dots-hyprland}"
 
