@@ -242,7 +242,11 @@ external monitor work, and reboot back to lts.
 
 When everything passes:
 ```sh
-$ git -C ~/.config/hypr switch main && git -C ~/.config/hypr merge --ff-only migrate/lua-0.56
+# Fast-forward the main ref WITHOUT touching the live working tree, then switch (no file changes).
+# Never `git switch main` first: that briefly restores the old hyprlang tree (no hyprland.lua),
+# autoreload fires, and Hyprland drops into emergency mode with no binds (happened on 2026-10-04).
+$ git -C ~/.config/hypr push . migrate/lua-0.56:main
+$ git -C ~/.config/hypr switch main
 $ git -C ~/.config/hypr push origin main
 $ git -C ~/.config/quickshell/ii push origin rebase/upstream   # and make it the default branch when happy
 ```
@@ -350,4 +354,9 @@ _(fill in on day H, on the `migrate/lua-0.56` branch)_
     `custom/variables.lua` (kitty first), commit `efa595e`.
   - EasyEffects isn't installed (never was; the old `exec-once` failed silently too). Not a regression.
 - Merged `migrate/lua-0.56` → `main` (ff) and pushed; shell-qml `main` fast-forwarded to `rebase/upstream`.
+  - **Incident:** the merge was done as `git switch main` + `merge --ff-only` inside the live
+    `~/.config/hypr`. The switch briefly checked out the old hyprlang tree, autoreload saw no
+    `hyprland.lua`, and Hyprland showed "emergency mode: a lua config error resulted in no binds being
+    registered". The files came back with the merge; `hyprctl reload` restored all 198 binds. The merge
+    step above now fast-forwards the ref with `git push . branch:main` instead.
 - **Not done yet:** mainline kernel (`linux` 7.2.8) spot check; hypridle timings in normal use.
