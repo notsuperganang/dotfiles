@@ -15,7 +15,9 @@ local function lid_closed()
 end
 
 local function external_connected()
-    for _, m in pairs(hl.get_monitors()) do
+    local ok, monitors = pcall(hl.get_monitors)
+    if not ok or type(monitors) ~= "table" then return false end
+    for _, m in pairs(monitors) do
         if not (m.name:match("^eDP%-") or m.name:match("^LVDS%-") or m.name:match("^DSI%-")) then
             return true
         end
