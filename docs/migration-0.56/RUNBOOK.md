@@ -187,8 +187,9 @@ $ git add -A && git commit -m "chore: install end-4/dots-hyprland @ 33f31a08 (Lu
 ```
 Do **not** merge into `main` yet. That happens after verification (§7).
 
-✅ The tree contains upstream `hyprland/` + `hyprland.lua`, our `custom/*.lua`, `monitors.lua`,
-`workspaces.lua`, ported scripts (no `alt-tab.sh`), and upstream `hypridle.conf`/`hyprlock.conf`.
+✅ The tree contains upstream `hyprland/` + `hyprland.lua`, our `custom/*.lua`, ported scripts
+(no `alt-tab.sh`), and upstream `hypridle.conf`/`hyprlock.conf`. Apply a display profile locally
+through Settings → Display to generate the ignored `monitors.lua` and `workspaces.lua` files.
 No `custom/*.conf`, `monitors.conf` or `workspaces.conf` remain (the branch deleted them).
 
 ### 6.2 Quickshell fork

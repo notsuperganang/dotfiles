@@ -46,8 +46,8 @@ including `illogical-impulse-quickshell-git` 0.1.0.r1-7. Leftovers to clean up l
 | `custom/keybinds.conf` | `custom/keybinds.lua` | **us** |
 | `custom/rules.conf` (empty) | `custom/rules.lua` (empty) | **us** |
 | — | `custom/variables.lua`, `custom/execs.lua` (only if needed; upstream's `create_custom_config` service creates placeholders) | **us** |
-| `monitors.conf` | `monitors.lua` | **us** |
-| `workspaces.conf` | `workspaces.lua` | **us** |
+| `monitors.conf` | local generated `monitors.lua` | **Quickshell Display settings** |
+| `workspaces.conf` | local generated `workspaces.lua` | **Quickshell Display settings** |
 | `hypridle.conf` | `hypridle.conf` (still hyprlang, but with Lua-syntax dispatches). **Committed on our branch**, since setup only writes `hypridle.conf.new` on non-first runs | upstream, carried by us |
 | `hyprlock.conf`, `hyprlock/` | unchanged format; same `.new` behaviour | upstream, carried by us |
 | `custom/scripts/*.sh` | ported (see §3.3) | **us** |

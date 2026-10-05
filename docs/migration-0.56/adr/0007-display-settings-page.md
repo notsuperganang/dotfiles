@@ -14,7 +14,8 @@ layouts toggled by commenting lines out.
   and workspace → display pinning.
 - Profiles are stored in `~/.config/hypr/displays/profiles.json` (the GUI's source of truth).
   Applying a profile **overwrites** `monitors.lua` and `workspaces.lua` with generated Lua for that
-  profile. They are still plain, valid Lua that Hyprland reads directly, without a loader.
+  profile. They are still plain, valid Lua that Hyprland reads directly, without a loader. The
+  generated files remain local runtime state and are ignored by Git; `profiles.json` is tracked.
 - Apply → atomic write → `hyprctl reload` → "Keep changes?" with a 15 s countdown. A detached
   watchdog restores the previous files unless the change is kept, even if the settings window closes.
 - Identity: built-in panels by connector name (`eDP-2`, which the lid bind uses), externals by `desc:`.
@@ -23,8 +24,9 @@ layouts toggled by commenting lines out.
   lid. The check is only emitted for profiles that also enable a non-mirrored external display.
 
 ## Consequences
-- **Don't hand-edit `monitors.lua` / `workspaces.lua`.** Use Settings → Display (or edit
-  `profiles.json`); generated files carry a header saying so.
+- **Don't hand-edit or commit `monitors.lua` / `workspaces.lua`.** Use Settings → Display (or edit
+  `profiles.json`); generated files carry a header saying so. A fresh checkout must apply a
+  profile locally before Hyprland can load the display and workspace configuration.
 - The old comment-toggle layouts became profiles: Kiri-kanan (active), Atas-bawah, Presentasi
   (mirror), Extended kiri, Laptop saja. "Atas-bawah" carried the old, uncentred offset (x=320 was
   computed for a 2560-wide panel; at scale 1.33 it is 1920 logical px wide); the user re-centred it to

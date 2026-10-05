@@ -28,8 +28,8 @@
 │   ├── rules.lua
 │   └── scripts/
 ├── displays/profiles.json # display profiles — edit via Settings → Display
-├── monitors.lua         # GENERATED from the active display profile — don't hand-edit
-├── workspaces.lua       # GENERATED (workspace → monitor) — don't hand-edit
+├── monitors.lua         # LOCAL GENERATED file — don't hand-edit or commit
+├── workspaces.lua       # LOCAL GENERATED file — don't hand-edit or commit
 ├── hyprlock.conf        # hyprlock/hypridle still use hyprlang
 ├── hypridle.conf
 └── docs/migration-0.56/ # Lua migration plan, runbook and config check
@@ -48,6 +48,11 @@
 | `Super + Shift + S` | region screenshot (clipboard + `~/Pictures/Screenshots`) |
 | `Super + A` | toggle dock |
 | `Super + grave` | toggle cook mode 🍳 |
+
+Display profiles are stored in `displays/profiles.json`, which is tracked as the
+source of truth. Applying a profile through Settings → Display generates the
+local `monitors.lua` and `workspaces.lua` files; those generated files are
+ignored by Git and are required locally for the active display layout.
 
 ## customizing
 
