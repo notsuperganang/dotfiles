@@ -9,11 +9,6 @@ set -euo pipefail
 LOCK_FILE="${HOME}/.cache/ws12.lock"
 CMD="${1:-toggle}"
 
-#notify() {
-#  # butuh libnotify + daemon (swaync/dunst/gnome notif)
-#  command -v notify-send >/dev/null && notify-send "$@"
-#}
-
 notify() {
   # libnotify CLI: -t dalam ms (30.000 = 30s)
   command -v notify-send >/dev/null && notify-send -t 10000 "$@"
@@ -25,7 +20,7 @@ toggle_mode() {
     notify "Mode memasak nonaktif"
   else
     mkdir -p "$(dirname "$LOCK_FILE")"
-    printf 'on' > "$LOCK_FILE"
+    printf 'on' >"$LOCK_FILE"
     notify "Mode memasak aktif"
   fi
 }
@@ -53,7 +48,10 @@ ws_next() {
 }
 
 case "$CMD" in
-  toggle) toggle_mode ;;
-  next)   ws_next ;;
-  *)      echo "usage: $0 {toggle|next}" >&2; exit 2 ;;
+toggle) toggle_mode ;;
+next) ws_next ;;
+*)
+  echo "usage: $0 {toggle|next}" >&2
+  exit 2
+  ;;
 esac
