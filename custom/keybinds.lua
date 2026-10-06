@@ -31,11 +31,16 @@ hl.bind("SUPER + grave", hl.dsp.exec_cmd(scripts .. "/ws12-mode.sh toggle"), { d
 hl.unbind("SUPER + SUPER_L")
 hl.unbind("SUPER + SUPER_R")
 
--- Super+D: overview (upstream: maximize) ; maximize pindah ke Super+Ctrl+F
+-- Super+D: overview (upstream: maximize)
 hl.unbind("SUPER + D")
 hl.bind("SUPER + D", hl.dsp.global("quickshell:overviewWorkspacesToggle"), { description = "User: Toggle overview" })
-hl.bind("SUPER + CTRL + F", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }),
+-- Maximize dipakai paling sering, jadi di Super+F; fullscreen penuh pindah ke Super+Ctrl+F
+-- (upstream: Super+F = fullscreen)
+hl.unbind("SUPER + F")
+hl.bind("SUPER + F", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }),
     { description = "User: Maximize" })
+hl.bind("SUPER + CTRL + F", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }),
+    { description = "User: Fullscreen" })
 
 -- Super+A: toggle dock (upstream: sidebar kiri)
 hl.unbind("SUPER + A")
