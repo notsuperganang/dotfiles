@@ -31,7 +31,7 @@ layouts toggled by commenting lines out.
   (mirror), Extended kiri, Laptop saja. "Atas-bawah" carried the old, uncentred offset (x=320 was
   computed for a 2560-wide panel; at scale 1.33 it is 1920 logical px wide); the user re-centred it to
   x=0 from the Display page on 2026-10-04.
-- nwg-displays stays unused (ADR-0005's reasoning still holds).
+- nwg-displays stays unused (ADR-0005's reasoning still holds); the package was uninstalled on 2026-10-06.
 - The fork now carries 4 more commits to re-apply on every re-vendor (INVENTORY §4).
 - Tests: `~/dev/display-tests/` (copy into the fork root and run with `QS_DISPLAYS_HYPR_DIR` pointing at a
   scratch copy of the hypr dir). They cover snapping, generators, UI controls, apply/keep/revert and the watchdog.
